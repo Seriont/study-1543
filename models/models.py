@@ -59,25 +59,25 @@ class Launching():
     """
         list of cars - список объектов типа Car
     """
-    def __init__(self, launching_id, road, list_of_cars):
+    def __init__(self, launching_id, road, cars_list):
         self.launching_id = launching_id
         self.road = road
-        self.list_of_cars = list_of_cars
+        self.cars_list = cars_list
 
 
 class RoadState():
     """
         current list of cars - список объектов типа CurrentCar
     """
-    def __init__(self, launching_id, current_list_of_cars, cur_time=0):
+    def __init__(self, launching_id, current_cars_list, cur_time=0):
         self.launching_id = launching_id
-        self.current_list_of_cars = current_list_of_cars
+        self.current_cars_list = current_cars_list
         self.cur_time = cur_time
 
 
 class CurrentCar():
     """
-        car - объект типа Car (возмодно его стоит заменить на car_id)
+        car - объект типа Car (возможно его стоит заменить на car_id)
 
         road line - полоса, по которой едет машина, если значение:
         натурально число, то это номер полосы (в нашем случае это может быть
@@ -97,3 +97,46 @@ class Event():
         self.car_id = car_id
         self.new_speed = new_speed
         self.new_line = new_line
+
+
+class Log():
+    """
+        self.launching - 
+            contains Launching object.
+            <Launching>
+            defines launching parameters
+        self.events - 
+            contains list of Event objects
+            [<Event>]
+            defines changes in launching process
+        self.log_file - 
+            contains file
+            <FileObject>
+            format "log_n", n - launching_id
+            defines name of the log-file
+                      
+    """
+    def __init__(self, launching, events, road):
+        self.launching = launching
+        self.events = events
+        self.log_file = open("log_" + str(self.launching.launching_id), "w")
+        self.log_file.write(
+            "Launching number: " + str(self.launching.launching_id) + "\n" * 2
+            + "Cars number: " + str(len(self.launching.cars_list)) + "\n"
+            + "car id | car type | start speed | length | overtaking speed")
+        cars_list = self.launching.cars_list
+        for car in cars_list:
+            self.write_car(car)
+
+        self.log_file.write(
+            "Events number: " + str(len(self.events)))
+        for event in self.events:
+            self.write_event(event)
+
+    def write_car(self, car):
+        self.log_file.write(
+            "car#" + str(car.car_id) + " | "
+            + str(car.car_type) + " | "
+            + str(car.start_speed) + " | "
+            + str(car.length) + " | "
+            + str(car.overtaking_speed) + "\n")
