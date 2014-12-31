@@ -129,8 +129,32 @@ class Log():
             self.write_car(car)
 
         self.log_file.write(
+            "Road:" + "\n"
+            + "road id | length | number_of_pockets\n"
+        )
+        self.write_road(road)
+        self.log_file.write(
+            "Pockets:\n"
+            "beginning | length\n"
+        )
+        for pocket in road.list_of_pockets:
+            self.write_pocket(pocket)
+
+        self.log_file.write(
             "\n"
             + "car id | time | new_speed | new_line\n")
+
+    def write_pocket(self, pocket):
+        self.log_file.write(
+            str(pocket.beginning) + " | "
+            + str(pocket.length) + " | \n"
+        )
+
+    def write_road(self, road):
+        self.log_file.write(
+            "road#" + str(road.road_id)
+            + str(road.length) + " | "
+            + str(len(road.list_of_pockets)) + "\n")
 
     def write_car(self, car):
         self.log_file.write(
@@ -142,7 +166,7 @@ class Log():
 
     def write_event(self, event):
         self.log_file.write(
-            + "car#" + str(event.car_id) + "|"
-            + str(event.time) + "|"
-            + str(event.new_speed) + "|"
+            + "car#" + str(event.car_id) + " | "
+            + str(event.time) + " | "
+            + str(event.new_speed) + " | "
             + str(event.new_line) + "\n")
