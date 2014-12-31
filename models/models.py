@@ -129,9 +129,8 @@ class Log():
             self.write_car(car)
 
         self.log_file.write(
-            "Events number: " + str(len(self.events)))
-        for event in self.events:
-            self.write_event(event)
+            "\n"
+            + "car id | time | new_speed | new_line\n")
 
     def write_car(self, car):
         self.log_file.write(
@@ -140,3 +139,10 @@ class Log():
             + str(car.start_speed) + " | "
             + str(car.length) + " | "
             + str(car.overtaking_speed) + "\n")
+
+    def write_event(self, event):
+        self.log_file.write(
+            + "car#" + str(event.car_id) + "|"
+            + str(event.time) + "|"
+            + str(event.new_speed) + "|"
+            + str(event.new_line) + "\n")
