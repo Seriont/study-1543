@@ -170,3 +170,15 @@ class Log():
             + str(event.time) + " | "
             + str(event.new_speed) + " | "
             + str(event.new_line) + "\n")
+
+    def write_(self, object):
+        if type(object) == Pocket:
+            self.write_pocket(object)
+        elif type(object) == Road:
+            self.write_road(object)
+        elif type(object) == Car:
+            self.write_car(object)
+        elif type(object) == Event:
+            self.write_event(object)
+        else:
+            raise Exception
