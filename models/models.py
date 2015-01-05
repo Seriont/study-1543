@@ -126,19 +126,19 @@ class Log():
             + "car id | car type | start speed | length | overtaking speed")
         cars_list = self.launching.cars_list
         for car in cars_list:
-            self.write_car(car)
+            self.write_in_log(car)
 
         self.log_file.write(
             "Road:" + "\n"
             + "road id | length | number_of_pockets\n"
         )
-        self.write_road(road)
+        self.write_in_log(road)
         self.log_file.write(
             "Pockets:\n"
             "beginning | length\n"
         )
         for pocket in road.list_of_pockets:
-            self.write_pocket(pocket)
+            self.write_in_log(pocket)
 
         self.log_file.write(
             "\n"
@@ -171,7 +171,7 @@ class Log():
             + str(event.new_speed) + " | "
             + str(event.new_line) + "\n")
 
-    def write_(self, object):
+    def write_in_log(self, object):
         if type(object) == Pocket:
             self.write_pocket(object)
         elif type(object) == Road:
