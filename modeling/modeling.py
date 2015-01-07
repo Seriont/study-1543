@@ -1,18 +1,17 @@
-from models.models import Log, Launching, Car
-from roads.roads import
-from functions.functions import latest_launching_id
+# -*-coding: utf-8 -*-
+
 import random
+
+from models.models import Launching, Car
+from common.functions import latest_launching_id, get_road
 
 
 class Generator():
     """
     Данный класс используется при конфигурации нового запуска и только тогда
-
-    get_road() - функция, которая достает нужную дорогу из уже имеющихся по ее
-    id. Пока что не продумано, каким образом будут создаваться и храниться road
     """
 
-    def generate_car(self, car_id):
+    def __generate_car(self, car_id):
         car = Car(
             car_id=car_id,
             start_speed=(60 + random.random() % 20),
@@ -23,12 +22,13 @@ class Generator():
 
     def generate_launching(
             self,
-            number_of_cars=random.random() % 20,
-            road_id=0):
+            number_of_cars=(1 + random.random() % 20),
+            road_id=0
+    ):
         road = get_road(road_id)
         cars_list = []
         for car_id in range(number_of_cars):
-            cars_list.append(self.generate_car(car_id))
+            cars_list.append(self.__generate_car(car_id))
         launching_id = latest_launching_id() + 1
         launching = Launching(
             launching_id=launching_id,
