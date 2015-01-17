@@ -14,19 +14,35 @@ class Time():
 
         __value, в котором хранится само его значение не доступен извне
         для его получения нужно вызвать его как функци: time()
-
-        для получения времени в виде строки можно писать str(time)
     """
-    def __init__(self, value):
+    def __init__(self, value=0):
         if type(value) != type(int()):
             raise TypeError
         self.__value = value
 
-    def __str__(self):
-        return "({0.__value!r}".format(self)
-
     def __call__(self):
         return self.__value
+
+    def __lt__(self, other):
+        return self.__value < other.__value
+
+    def __le__(self, other):
+        return self.__value <= other.__value
+
+    def __eq__(self, other):
+        return self.__value == other.__value
+
+    def __ne__(self, other):
+        return self.__value != other.__value
+
+    def __ge__(self, other):
+        return self.__value >= other.__value
+
+    def __gt__(self, other):
+        return self.__value > other.__value
+
+    def increase(self, value=1):
+        self.__value += value
 
 
 class Pocket():
@@ -58,7 +74,8 @@ class Car():
 
 class Launching():
     """
-        list of cars - список объектов типа Car
+        list of cars - список пар объектов типа Car, Time где воторой объект
+        задает время старта для той или иной машины
     """
     def __init__(self, launching_id, road, cars_list):
         self.launching_id = launching_id
