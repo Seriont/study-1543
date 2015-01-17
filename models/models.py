@@ -30,9 +30,10 @@ class Time():
 
 
 class Pocket():
-    def __init__(self, beginning, length):
+    def __init__(self, beginning, length, pocket_id):
         self.beginning = beginning
         self.length = length
+        self.pocket_id = pocket_id
 
 
 class Road():
@@ -97,88 +98,3 @@ class Event():
         self.car_id = car_id
         self.new_speed = new_speed
         self.new_line = new_line
-
-
-class Log():
-    """
-        self.launching - 
-            contains Launching object.
-            <Launching>
-            defines launching parameters
-        self.events - 
-            contains list of Event objects
-            [<Event>]
-            defines changes in launching process
-        self.log_file - 
-            contains file
-            <FileObject>
-            format "log_n", n - launching_id
-            defines name of the log-file
-                      
-    """
-    def __init__(self, launching, events, road):
-        self.launching = launching
-        self.events = events
-        self.log_file = open("log_" + str(self.launching.launching_id), "w")
-        self.log_file.write(
-            "Launching number: " + str(self.launching.launching_id) + "\n" * 2
-            + "Cars number: " + str(len(self.launching.cars_list)) + "\n"
-            + "car id | car type | start speed | length | overtaking speed")
-        cars_list = self.launching.cars_list
-        for car in cars_list:
-            self.write_in_log(car)
-
-        self.log_file.write(
-            "Road:" + "\n"
-            + "road id | length | number_of_pockets\n"
-        )
-        self.write_in_log(road)
-        self.log_file.write(
-            "Pockets:\n"
-            "beginning | length\n"
-        )
-        for pocket in road.list_of_pockets:
-            self.write_in_log(pocket)
-
-        self.log_file.write(
-            "\n"
-            + "car id | time | new_speed | new_line\n")
-
-    def write_pocket(self, pocket):
-        self.log_file.write(
-            str(pocket.beginning) + " | "
-            + str(pocket.length) + " | \n"
-        )
-
-    def write_road(self, road):
-        self.log_file.write(
-            "road#" + str(road.road_id)
-            + str(road.length) + " | "
-            + str(len(road.list_of_pockets)) + "\n")
-
-    def write_car(self, car):
-        self.log_file.write(
-            "car#" + str(car.car_id) + " | "
-            + str(car.car_type) + " | "
-            + str(car.start_speed) + " | "
-            + str(car.length) + " | "
-            + str(car.overtaking_speed) + "\n")
-
-    def write_event(self, event):
-        self.log_file.write(
-            + "car#" + str(event.car_id) + " | "
-            + str(event.time) + " | "
-            + str(event.new_speed) + " | "
-            + str(event.new_line) + "\n")
-
-    def write_in_log(self, object):
-        if type(object) == Pocket:
-            self.write_pocket(object)
-        elif type(object) == Road:
-            self.write_road(object)
-        elif type(object) == Car:
-            self.write_car(object)
-        elif type(object) == Event:
-            self.write_event(object)
-        else:
-            raise Exception
