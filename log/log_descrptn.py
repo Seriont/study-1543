@@ -82,7 +82,7 @@ class Log():
     def __get_car(self, car_id):
         pass
 
-    def __get_event(self, car_id, time):
+    def __get_event(self, event_id):
         pass
 
     def get(self, object):
