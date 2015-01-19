@@ -87,7 +87,7 @@ class RoadState():
     """
         current list of cars - список объектов типа CurrentCar
     """
-    def __init__(self, launching_id, current_cars_list, cur_time=0):
+    def __init__(self, launching_id, current_cars_list=[], cur_time=Time(0)):
         self.launching_id = launching_id
         self.current_cars_list = current_cars_list
         self.cur_time = cur_time
@@ -101,7 +101,7 @@ class CurrentCar():
         натурально число, то это номер полосы (в нашем случае это может быть
         только 1), если машина едет в кармане, то значение равно 0
     """
-    def __init__(self, car, coordinate=0, current_speed=0, road_line=1):
+    def __init__(self, car, current_speed, coordinate=0, road_line=1):
         self.car = car
         self.coordinate = coordinate
         self.current_speed = current_speed

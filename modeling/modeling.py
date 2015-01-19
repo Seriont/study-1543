@@ -2,7 +2,8 @@
 
 import random
 
-from models.models import Launching, Car, Log, Time
+from log.log_descrptn import Log
+from models.models import Launching, Car, Time, RoadState, CurrentCar
 from common.functions import latest_launching_id, get_road
 
 
@@ -60,4 +61,25 @@ class Modeling(Log):
 
     def __init__(self, launching_id, visualize=False):
         self.launching = self.get(launching_id)
+        self.road_state = RoadState(
+            launching_id=launching_id
+        )
+        self.visualize=visualize
 
+    def handler(self):
+        cars_list = self.get(
+            self.launching.launching_id,
+            Car()
+        )
+        # это должно считывать машины по этому launching_id
+        while self.road_state.current_cars_list[0].coordinate >= \
+                self.launching.road.length:
+            for (car, start_time) in cars_list:
+                if start_time == self.road_state.cur_time:
+                    new_car = CurrentCar(
+                        car=car,
+                        coordinate=0,
+                        current_speed=car.start_speed
+                    )
+                    self.road_state.current_cars_list = [new_car] + \
+                                        self.road_state.current_cars_list
