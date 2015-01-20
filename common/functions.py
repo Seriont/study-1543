@@ -27,12 +27,12 @@ def get_road(road_id):
         input_file = open(file_name, mode="r")
         length_str = input_file.readline()
         length_of_road = int(
-            length_str[length_str.find(":")+1:].strip().rstrip()
+            length_str[length_str.rfind(":")+1:].strip().rstrip()
         )
         pockets = []
         pocket_str = input_file.readline()
         while pocket_str:
-            pocket_str = pocket_str[pocket_str.find(":")+1:]
+            pocket_str = pocket_str[pocket_str.rfind(":")+1:]
             beginning, length = tuple(
                 map(int, pocket_str.strip().rstrip().split())
             )
@@ -46,7 +46,7 @@ def get_road(road_id):
 
         return Road(
             road_id=road_id,
-            length=length,
+            length=length_of_road,
             list_of_pockets=pockets
         )
 
